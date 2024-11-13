@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import LeftSideBar from "./components/LeftSideBar";
 import FriendsAcitivity from "./components/FriendsAcitivity";
 import { useEffect } from "react";
-import AudioPlayer from "./components/AudioPlayer";
 import PlaybackControls from "./components/PlaybackControls";
 import { useUser } from "@clerk/clerk-react";
 import { useChatStore } from "@/stores/useChatStore";
