@@ -13,6 +13,7 @@ interface ChatStore {
 	userActivities: Map<string, string>;
 	messages: Message[];
 	selectedUser: User | null;
+	isMobile: boolean;
     
     fetchUsers: () => Promise<void>;
     initSocket: (userId: string) => void;
@@ -39,6 +40,7 @@ export const useChatStore = create<ChatStore>((set,get) => ({
 	userActivities: new Map(),
 	messages: [],
 	selectedUser: null,
+	isMobile: false,
 
     setSelectedUser: (user) => set({ selectedUser: user }),
 

@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useMusicStore } from "@/stores/useMusicStore";
 import { Calendar, Music, Trash2 } from "lucide-react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const AlbumsTable = () => {
     const { albums, deleteAlbum, fetchAlbums } = useMusicStore();
@@ -30,7 +31,11 @@ const AlbumsTable = () => {
 						<TableCell>
 							<img src={album.imageUrl} alt={album.title} className='w-10 h-10 rounded object-cover' />
 						</TableCell>
-						<TableCell className='font-medium select-none'>{album.title}</TableCell>
+						<TableCell className='font-medium'>
+							<Link to={`/albums/${album._id}`}>
+								{album.title}
+							</Link>
+						</TableCell>
 						{/* TODO: replace artist with description? */}
                         <TableCell className="select-none">{album.artist}</TableCell>
 						<TableCell>
