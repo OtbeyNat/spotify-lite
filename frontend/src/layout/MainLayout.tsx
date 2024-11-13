@@ -27,7 +27,6 @@ const MainLayout = () => {
     return (
         <div className="h-screen bg-black text-white flex flex-col">
             <ResizablePanelGroup direction="horizontal" className='flex-1 flex h-full overflow-hidden p-2'>
-                <AudioPlayer/>
                 {/* left side */}
                 {/* TODO: spacebar event listener to toggle play song in queue */}
                 
