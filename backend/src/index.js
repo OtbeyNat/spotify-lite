@@ -29,7 +29,6 @@ initializeSocket(httpServer);
 
 app.use(
     cors({
-        // TODO: update url
 		origin: "http://localhost:3000",
 		credentials: true,
 	})

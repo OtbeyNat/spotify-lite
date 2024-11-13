@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // TODO: logic to view albums in dashboard for a user
-// TODO: replace artist with description
+// TODO: replace artist with description..?
 const albumSchema = new mongoose.Schema(
 	{
 		title: { type: String, required: true },
