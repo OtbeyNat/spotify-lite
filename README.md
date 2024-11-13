@@ -15,5 +15,5 @@ Key Features Include:
 Credits:\
 Spotify LITE was made solely from the dedicated time and effort from @burakorkmez\
 @OtbeyNat watched @burakorkmez's in order to build the application from scratch, incorporated his own features, and implemented Spotify's official Web API as a part of his learning experience \
-https://github.com/burakorkmez/realtime-spotify-clone/blob/master/README.md\
+https://github.com/burakorkmez/realtime-spotify-clone/tree/master
 https://www.youtube.com/watch?v=4sbklcQ0EXc
