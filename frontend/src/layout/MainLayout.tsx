@@ -29,7 +29,7 @@ const MainLayout = () => {
                 {/* left side */}
                 {/* TODO: spacebar event listener to toggle play song in queue */}
                 
-                <ResizablePanel defaultSize={20} minSize={isMobile ? 0 : 10} maxSize={user && !isMobile ? 20 : 0}>
+                <ResizablePanel defaultSize={20} minSize={0} maxSize={user && !isMobile ? 20 : 0}>
                     <LeftSideBar />
                 </ResizablePanel>
 
