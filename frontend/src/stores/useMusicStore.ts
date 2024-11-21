@@ -15,6 +15,8 @@ interface MusicStore {
 	featuredSongs: Song[];
 	madeForYouSongs: Song[];
 	trendingSongs: Song[];
+	songSearchResults: Song[];
+	// cache results somewhere
 	stats: Stats;
 
 	fetchAlbums: () => Promise<void>;
@@ -40,6 +42,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	madeForYouSongs: [],
 	featuredSongs: [],
 	trendingSongs: [],
+	songSearchResults: [],
 	stats: {
 		totalSongs: 0,
 		totalAlbums: 0,
@@ -130,6 +133,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	fetchFeaturedSongs: async () => {
 		set({ isLoading: true, error: null });
 		try {
+			
 			const response = await axiosInstance.get("/songs/featured");
 			set({ featuredSongs: response.data });
 		} catch (error: any) {
@@ -142,6 +146,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	fetchMadeForYouSongs: async () => {
 		set({ isLoading: true, error: null });
 		try {
+			// GET USERS TOP SONGS
+			// long_term = ~1 year
+			// medium_term = ~6 months
+			// short_term = ~4 weeks
 			const response = await axiosInstance.get("/songs/made-for-you");
 			set({ madeForYouSongs: response.data });
 		} catch (error: any) {

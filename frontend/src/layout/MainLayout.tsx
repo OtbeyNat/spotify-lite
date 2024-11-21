@@ -6,22 +6,57 @@ import { useEffect } from "react";
 import PlaybackControls from "./components/PlaybackControls";
 import { useUser } from "@clerk/clerk-react";
 import { useChatStore } from "@/stores/useChatStore";
-
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { checkAccessToken } from "@/lib/utils";
+// import axios from "axios";
+// import { axiosInstance } from "@/lib/axios";
+// import { isTokenValid } from "@/lib/utils";
 
 const MainLayout = () => {
     const { user } = useUser();
-    // const [isMobile, setIsMobile] = useState(false);
+    const [ tokens ] = useSearchParams();
     const { isMobile } = useChatStore();
-	useEffect(() => {
-		const checkMobile = () => {
-			// setIsMobile(window.innerWidth < 768);
-            useChatStore.setState({ isMobile: window.innerWidth < 768 });
-		};
+    const navigate = useNavigate();
 
-		checkMobile();
-		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
-	}, []);
+    useEffect(() => {
+        const checkMobile = () => {
+            // setIsMobile(window.innerWidth < 768);
+            useChatStore.setState({ isMobile: window.innerWidth < 768 });
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    useEffect(() => {
+        // const test = async () => {
+        //     const result = await axiosInstance.get(`/spotify/profile?token=${localStorage.getItem("spotify_access_token")!}`);
+        //     console.log(result);
+        // };
+
+        if (user) {
+            console.log("homepage check")
+            checkAccessToken()
+            .then(() => console.log("spotify_access_token",localStorage.getItem("spotify_access_token")))
+        }
+    },[])
+
+    // useEffect runs when browser redirect with tokens in params
+    useEffect(() => {
+        const accessToken = tokens.get('access_token');
+        const refreshToken = tokens.get('refresh_token');
+        const expires_in = tokens.get('expires_in');
+        if (accessToken && refreshToken && expires_in) {
+            console.log("Update Access Token",accessToken);
+            const expireTime = Date.now() + parseInt(expires_in) * 1000;
+            // console.log("EXPIRE TIME",expireTime.toString());
+            localStorage.setItem("spotify_access_token",accessToken);
+            localStorage.setItem("spotify_refresh_token",refreshToken);
+            localStorage.setItem("expire_time",expireTime.toString());
+            navigate("/");
+        }
+    },[tokens])
 
     return (
         <div className="h-screen bg-black text-white flex flex-col">
@@ -29,7 +64,7 @@ const MainLayout = () => {
                 {/* left side */}
                 {/* TODO: spacebar event listener to toggle play song in queue */}
                 
-                <ResizablePanel defaultSize={20} minSize={0} maxSize={user && !isMobile ? 20 : 0}>
+                <ResizablePanel defaultSize={isMobile ? 0 : 20} minSize={0} maxSize={user && !isMobile ? 20 : 0}>
                     <LeftSideBar />
                 </ResizablePanel>
 
@@ -43,7 +78,7 @@ const MainLayout = () => {
                 <ResizableHandle className="w-2 bg-black rounded-lg transition-colors"/>
 
                 {/* right side */}
-                <ResizablePanel defaultSize={20} minSize={0} maxSize={isMobile ? 0 : 20} collapsedSize={0}>
+                <ResizablePanel defaultSize={isMobile ? 0 : 20} minSize={0} maxSize={isMobile ? 0 : 20} collapsedSize={0}>
                     <FriendsAcitivity />
                 </ResizablePanel>
             </ResizablePanelGroup>

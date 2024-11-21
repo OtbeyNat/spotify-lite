@@ -3,6 +3,7 @@ import { User } from "../models/user.model.js";
 export const authCallback = async (req, res, next) => {
     try {
         const { id, firstName, lastName, imageUrl } = req.body;
+        // console.log(req.body);
 
         const user = await User.findOne({clerkId: id});
 

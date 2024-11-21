@@ -40,7 +40,8 @@ const SectionGrid = ({title, songs, isLoading}: SectionGridProps) => {
 							<PlayButton song={song} />
 						</div>
 						<h3 className='font-medium mb-2 truncate'>{song.title}</h3>
-						<p className='text-sm text-zinc-400 truncate'>{song.artist}</p>
+						{/* <p className='text-sm text-zinc-400 truncate'>{song.artists[0].artistName}</p> */}
+						<p className='text-sm text-zinc-400 truncate'>Artist</p>
 					</div>
 				))}
 			</div>

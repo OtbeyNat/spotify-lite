@@ -8,18 +8,20 @@ const SignInOAuthButtons = () => {
         return null;
     }
 
-    const signInWithGoogle = () => {
+    const signInWithSpotify = () => {
 		signIn.authenticateWithRedirect({
-			strategy: "oauth_google",
+			strategy: "oauth_spotify", // or oauth_google
 			redirectUrl: "/sso-callback",
 			redirectUrlComplete: "/auth-callback",
 		});
 	};
 
     return (
-        <Button onClick={signInWithGoogle} variant={"secondary"} className='w-full text-white border-zinc-200 h-11'>
-            <img src='/google.png' alt='Google' className='size-5' />
-            Continue with Google
+        <Button onClick={signInWithSpotify} variant={"secondary"} className='w-full text-white border-zinc-200 h-11'>
+            <img src='/spotify.png' alt='Spotify' className='size-5' />
+            {/* <img src='/google.png' alt='Google' className='size-5' /> */}
+            Continue with Spotify
+            {/* Continue with Google */}
         </Button>
     )
 }

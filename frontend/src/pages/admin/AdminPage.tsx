@@ -10,7 +10,6 @@ import { useMusicStore } from "@/stores/useMusicStore";
 
 const AdminPage = () => {
     
-    // const {isAdmin, isLoading } = useAuthStore();
     const { fetchAlbums, fetchSongs, fetchStats} = useMusicStore();
 
     useEffect(() => {
@@ -18,8 +17,6 @@ const AdminPage = () => {
 		fetchSongs();
 		fetchStats();
 	}, [fetchAlbums, fetchSongs, fetchStats]);
-
-    // if (!isAdmin && !isLoading) return <div>Unauthorized</div>
     
     return (
         <div className='min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-900 to-black text-zinc-100 p-8'>

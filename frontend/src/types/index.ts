@@ -1,11 +1,19 @@
+export interface ArtistSongInfo {
+	artistName: string;
+	artistLink: string;
+}
+
 export interface Song {
 	_id: string;
 	title: string;
-	artist: string;
+	artists: ArtistSongInfo[];
 	albumId: string | null;
 	imageUrl: string;
 	audioUrl: string;
+	trackUrl: string;
+	popularity: number;
 	duration: number;
+	releaseDate: string;
 	createdAt: string;
 	updatedAt: string;
 }

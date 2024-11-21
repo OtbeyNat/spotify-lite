@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { usePlayerStore } from "@/stores/usePlayerStore"
+import { SignedIn } from "@clerk/clerk-react";
 import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -50,6 +51,7 @@ const PlaybackControls = () => {
 
     return (
         <footer className='h-20 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-4'>
+            <SignedIn>
             <div className='flex justify-between items-center h-full max-w-[1800px] mx-auto'>
                 {/* current song */}
                 <div className='flex items-center gap-4 md:min-w-[180px] lg:w-[30%]'>
@@ -65,7 +67,8 @@ const PlaybackControls = () => {
 									{currentSong.title}
 								</div>
 								<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer select-none'>
-									{currentSong.artist}
+									{/* {currentSong.artists[0].artistName} */}
+									Artist
 								</div>
 							</div>
 						</>
@@ -133,7 +136,8 @@ const PlaybackControls = () => {
                 {/* volume */}
                 <div className='flex items-center gap-4 md:min-w-[180px] lg:w-[30%] justify-end'>
                     <Button size='icon' variant='ghost' className='hover:text-green-400 text-zinc-400 hidden sm:flex'>
-						<Mic2 className='h-4 w-4' />
+						{/* TODO: lyrics logic */}
+                        <Mic2 className='h-4 w-4' />
 					</Button>
 					<Button size='icon' variant='ghost' className='hover:text-green-400 text-zinc-400 hidden sm:flex'>
                         {/* TODO: QUEUE COMPONENT -> rightside component: store toggle queue/friends... if mobile?? outlet component? */}
@@ -163,6 +167,7 @@ const PlaybackControls = () => {
                     </div>
                 </div>
             </div>
+            </SignedIn>
         </footer>
     )
 }

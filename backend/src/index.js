@@ -14,6 +14,7 @@ import authRoutes from "./routes/auth.route.js";
 import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/stat.route.js";
+import spotifyRoutes from "./routes/spotify.route.js"
 import { connectDB } from "./lib/db.js";
 
 dotenv.config();
@@ -29,8 +30,9 @@ initializeSocket(httpServer);
 
 app.use(
     cors({
-		origin: "http://localhost:3000",
-		credentials: true,
+		origin: "*",
+		// origin: "http://localhost:3000",
+		// credentials: true,
 	})
 );
 
@@ -67,6 +69,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
+app.use("/api/spotify",spotifyRoutes);
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "../frontend/dist")));

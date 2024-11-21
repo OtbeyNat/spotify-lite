@@ -1,11 +1,11 @@
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { LayoutDashboardIcon, MessageCircle } from "lucide-react";
+import { LayoutDashboardIcon, MessageCircle, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import SignInOAuthButtons from "./SignInOAuthButtons";
-// import { useAuthStore } from "@/stores/useAuthStore";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { useChatStore } from "@/stores/useChatStore";
+
 
 const Topbar = () => {
     const { isMobile } = useChatStore();
@@ -18,20 +18,33 @@ const Topbar = () => {
                 </Link>
                 <p className="hidden sm:inline">Spotify LITE</p>
             </div>
-            {/* TODO: search bar for songs */}
-            <div className="flex items-center gap-4">    
+            <div className="flex items-center gap-4">
                 <SignedIn>
-                    {isMobile && <Link
-                        to={"/chat"}
-                        className={cn(
-                            buttonVariants({
-                                variant: "ghost",
-                                className: "text-white hover:bg-zinc-800",
-                            })
-                        )}
-                    >
-                        <MessageCircle className='size-5' />
-                    </Link>}
+                    {/* <Button onClick={getToken}>
+                        Spotify Auth
+                    </Button> */}
+                    {isMobile && 
+                        <Link
+                            to={"/chat"}
+                            className={cn(buttonVariants({
+                                    variant: "ghost",
+                                    className: "text-white hover:bg-zinc-800",
+                            }))}
+                        >
+                            <MessageCircle className='size-3' />
+                        </Link>
+                    }
+                    {isMobile &&
+                        <Link
+                            to={"/search"}
+                            className={cn(buttonVariants({
+                                    variant: "ghost",
+                                    className: "text-white hover:bg-zinc-800",
+                            }))}
+                        >
+                            <Search className='size-3' />
+                        </Link>
+                    }
                     <Link to={"/admin"} className={cn(buttonVariants({
                         variant: "outline"
                     }))}>

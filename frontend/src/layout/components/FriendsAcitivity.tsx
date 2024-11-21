@@ -26,7 +26,7 @@ const FriendsAcitivity = () => {
             {!user && <LoginPrompt/>}
 
             <ScrollArea className="flex-1">
-                <div className="p-4 space-y-4">
+                <div className="p-4 space-y-2">
                     {users.map((user) => {
                         const activity = userActivities.get(user.clerkId);
 						const isPlaying = activity && activity !== "Idle";
