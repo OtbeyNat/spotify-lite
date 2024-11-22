@@ -113,8 +113,7 @@ export const requestSpotify = async (req,res,next) => {
 		// 	body: JSON.stringify(body),
 		// 	json: true
 		// })
-		const data = await response.json();
-		console.log(data);
+		console.log(response.data);
 		res.redirect(`${process.env.NODE_ENV === "development" ? `http://localhost:3000/` : "https://spotify-lite.onrender.com/"}?access_token=${response.data.access_token}&refresh_token=${response.data.refresh_token}&expires_in=${response.data.expires_in}`)
 		// res.send(response.data);
 
