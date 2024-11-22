@@ -44,7 +44,9 @@ const SongsTable = () => {
 							<img src={song.imageUrl} alt={song.title} className='size-10 rounded object-cover select-none' />
 						</TableCell>
 						<TableCell className='font-medium select-none'>{song.title}</TableCell>
-						<TableCell className="select-none">{song.artist}</TableCell>
+						<TableCell className='text-sm flex text-zinc-400 truncate gap-1 select-none'>
+							{song.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
+						</TableCell>
 						<TableCell>
 							<span className='inline-flex items-center gap-1 text-zinc-400 select-none'>
 								<Calendar className='h-4 w-4' />

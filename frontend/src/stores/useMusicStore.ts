@@ -3,6 +3,8 @@ import { Album, Song, Stats } from "@/types";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 
+
+
 interface MusicStore {
 	songs: Song[];
 	albums: Album[];
@@ -12,11 +14,17 @@ interface MusicStore {
 	isFetchStatsLoading: boolean;
 	error: string | null;
 	currentAlbum: Album | null;
+
 	featuredSongs: Song[];
 	madeForYouSongs: Song[];
 	trendingSongs: Song[];
+
 	songSearchResults: Song[];
+	currentSearchQuery: string | null;
+	currentSearchType: "Tracks" | "Albums";
+	albumSearchResults: Album[];
 	// cache results somewhere
+
 	stats: Stats;
 
 	fetchAlbums: () => Promise<void>;
@@ -43,6 +51,9 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	featuredSongs: [],
 	trendingSongs: [],
 	songSearchResults: [],
+	albumSearchResults: [],
+	currentSearchQuery: "",
+	currentSearchType: "Tracks",
 	stats: {
 		totalSongs: 0,
 		totalAlbums: 0,

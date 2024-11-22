@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { usePlayerStore } from "@/stores/usePlayerStore"
 import { SignedIn } from "@clerk/clerk-react";
-import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
+import { ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const formatTime = (seconds: number) => {
@@ -66,9 +66,8 @@ const PlaybackControls = () => {
 								<div className='font-medium truncate hover:underline cursor-pointer select-none'>
 									{currentSong.title}
 								</div>
-								<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer select-none'>
-									{/* {currentSong.artists[0].artistName} */}
-									Artist
+								<div className='text-sm flex gap-1 text-zinc-400 truncate select-none'>
+                                    {currentSong.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
 								</div>
 							</div>
 						</>
@@ -142,9 +141,6 @@ const PlaybackControls = () => {
 					<Button size='icon' variant='ghost' className='hover:text-green-400 text-zinc-400 hidden sm:flex'>
                         {/* TODO: QUEUE COMPONENT -> rightside component: store toggle queue/friends... if mobile?? outlet component? */}
 						<ListMusic className='h-4 w-4' />
-					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-green-400 text-zinc-400 hidden sm:flex'>
-						<Laptop2 className='h-4 w-4' />
 					</Button>
                     <div className='flex items-center gap-2'>
                         <Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>

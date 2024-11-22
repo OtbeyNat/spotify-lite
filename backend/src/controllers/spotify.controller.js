@@ -16,7 +16,49 @@ export const searchItems = async (req,res,next) => {
 			headers: { 'Authorization': `Bearer ${token}` }
 		});
 
-		res.send(result.data);
+		const trackResults = result.data.tracks.items;
+            var tracks = trackResults.map((item) => (
+                {
+                    id: item.id,
+                    title: item.name,
+                    artists: item.artists.map((artist) => (
+                        {
+                            artistName: artist.name,
+                            artistLink: artist.external_urls.spotify,
+                        }
+                    )),
+                    // albums: item.album,
+                    // albumId: "1",
+                    imageUrl: item.album.images[0].url,
+                    audioUrl: item.preview_url,
+                    trackUrl: item.external_urls.spotify,
+                    popularity: item.popularity,
+                    duration: item.duration_ms / 1000,
+                    releaseDate: item.album.release_date,
+                }
+            ));
+            // console.log(tracks);
+            const albumResults = result.data.albums.items;
+            var albums = albumResults.map((item) => (
+                {
+                    id: item.id,
+                    title: item.name,
+                    // artistSchema
+                    artists: item.artists.map((artist) => (
+                        {
+                            artistName: artist.name,
+                            artistLink: artist.external_urls.spotify,
+                        }
+                    )),
+                    imageUrl: item.images[0].url,
+                    totalTracks: item.total_tracks,
+                    releaseDate: item.release_date,
+                    songs: [],
+                }
+            ));
+            // console.log(albums);
+
+		res.json({tracks,albums});
 
 		// if (result) {
 			

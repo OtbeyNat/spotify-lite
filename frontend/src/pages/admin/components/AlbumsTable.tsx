@@ -37,7 +37,9 @@ const AlbumsTable = () => {
 							</Link>
 						</TableCell>
 						{/* TODO: replace artist with description? */}
-                        <TableCell className="select-none">{album.artist}</TableCell>
+                        <TableCell className='text-sm flex text-zinc-400 truncate gap-1 select-none'>
+							{album.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
+						</TableCell>
 						<TableCell>
 							<span className='inline-flex items-center gap-1 text-zinc-400'>
 								<Calendar className='h-4 w-4' />

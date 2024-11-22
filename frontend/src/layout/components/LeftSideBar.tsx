@@ -20,7 +20,6 @@ const LeftSideBar = () => {
     },[fetchAlbums, user]);
 
     // console.log({albums});
-
     return (
         <div className="h-full flex flex-col gap-2">
             {/* Navigation */}
@@ -32,7 +31,8 @@ const LeftSideBar = () => {
                             buttonVariants({
                                 variant: "ghost",
                                 className: "w-full justify-start text-white hover:bg-zinc-800",
-                            })
+                            }),
+                            window.location.href.split('/')[3] === "" && "bg-zinc-800"
                         )}
                     >
                         <HomeIcon className="mr-2 size-5"/>
@@ -46,7 +46,8 @@ const LeftSideBar = () => {
                                 buttonVariants({
                                     variant: "ghost",
                                     className: "w-full justify-start text-white hover:bg-zinc-800",
-                                })
+                                }),
+                                window.location.href.split('/')[3] === "chat" && "bg-zinc-800"
                             )}
                         >
                             <MessageCircle className='mr-2 size-5' />
@@ -58,7 +59,8 @@ const LeftSideBar = () => {
                                 buttonVariants({
                                     variant: "ghost",
                                     className: "w-full justify-start text-white hover:bg-zinc-800",
-                                })
+                                }),
+                                window.location.href.split('/')[3] === "search" && "bg-zinc-800"
                             )}
                         >
                             <Search className='mr-2 size-5' />
@@ -71,9 +73,9 @@ const LeftSideBar = () => {
             {/* Library */}
             <div className='flex-1 rounded-lg bg-zinc-900 p-4'>
                 <div className='flex items-center justify-between mb-4'>
-                    <div className='flex items-centertext-white px-2 select-none'>
+                    <div className='flex items-center text-white px-2 select-none'>
                         <Library className='size-5 mr-2' />
-                        <span className='hidden md:inline truncate'>Playlists</span>
+                        <span className='hidden md:inline truncate'>Library</span>
                     </div>
                 </div>
 
@@ -96,7 +98,7 @@ const LeftSideBar = () => {
 
 									<div className='flex-1 min-w-0 items-center justify-between'>
 										<p className='font-medium truncate'>{album.title}</p>
-										<p className='text-sm text-zinc-400 truncate'>Album • {album.artist}</p>
+										<p className='text-sm text-zinc-400 truncate'>Album • Artist</p>
 									</div>
 								</Link>
 							))

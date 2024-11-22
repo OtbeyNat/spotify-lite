@@ -11,7 +11,7 @@ const Topbar = () => {
     const { isMobile } = useChatStore();
 
     return (
-        <div className="flex items-center justify-between p-5 sticky top-0 bg-zinc-900/75 backdrop-blur-md z-10 rounded-md">
+        <div className="flex items-center justify-between py-5 px-4 sm:px-6 sticky top-0 bg-zinc-900/75 backdrop-blur-md z-10 rounded-md">
             <div className="flex gap-2 items-center select-none">
                 <Link to={"/"}>
                     <img src="spotify.png" alt="logo" className="size-8"/>

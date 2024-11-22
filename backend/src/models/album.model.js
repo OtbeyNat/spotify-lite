@@ -1,15 +1,20 @@
 import mongoose from "mongoose";
+import { artistSchema } from "./song.model.js";
 
-// TODO: logic to view albums in dashboard for a user
-// TODO: replace artist with description..?
 const albumSchema = new mongoose.Schema(
 	{
+		id: {
+            type: String,
+            required: true,
+            unique: true
+        },
 		title: { type: String, required: true },
-		artist: { type: String, required: true },
+		artists: [artistSchema],
 		imageUrl: { type: String, required: true },
-		releaseYear: { type: Number, required: true },
+		totalTracks: { type: Number, required: false },
+		releaseDate: { type: String, required: true, },
+		releaseYear: { type: Number, required: true, },
 		songs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Song" }],
-		userId: {type: String, required: true},
 	},
 	{ timestamps: true } //  createdAt, updatedAt
 ); 

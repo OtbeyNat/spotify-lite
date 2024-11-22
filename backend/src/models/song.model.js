@@ -1,12 +1,18 @@
 import mongoose from "mongoose";
 
-const artistSchema = new mongoose.Schema({
+//TODO: maybe add artist id
+export const artistSchema = new mongoose.Schema({
     artist_name: {type: String, required: true},
     artist_link: {type: String, required: true},
 })
 
 const songSchema = new mongoose.Schema(
     {
+        id: {
+            type: String,
+            required: true,
+            unique: true
+        },
         title: {
             type: String,
             required: true,
