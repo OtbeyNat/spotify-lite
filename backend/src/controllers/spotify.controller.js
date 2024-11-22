@@ -92,6 +92,9 @@ export const requestSpotify = async (req,res,next) => {
 	try {
 		var code = req.query.code || null;
 		const redirect_uri = `${process.env.NODE_ENV === "development" ? `http://localhost:5000/api/spotify/request` : "https://spotify-lite.onrender.com/api/spotify/request"}`;
+		// var client_id = process.env.SPOTIFY_CLIENT_ID;
+		// var client_secret = process.env.SPOTIFY_CLIENT_SECRET;
+		console.log(client_id,client_secret);
 		const response = await axios.post('https://accounts.spotify.com/api/token', 
 			`grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`
 			, {
