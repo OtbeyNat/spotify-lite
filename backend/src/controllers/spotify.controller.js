@@ -91,13 +91,9 @@ export const searchItems = async (req,res,next) => {
 export const requestSpotify = async (req,res,next) => {
 	try {
 		var code = req.query.code || null;
-		const body = {
-			grant_type: 'authorization_code',
-			code,
-			redirect_uri: `${process.env.NODE_ENV === "development" ? `http://localhost:5000/api/spotify/request` : "https://spotify-lite.onrender.com/api/spotify/request"}`
-		};
+		const redirect_uri = `${process.env.NODE_ENV === "development" ? `http://localhost:5000/api/spotify/request` : "https://spotify-lite.onrender.com/api/spotify/request"}`;
 		const response = await axios.post('https://accounts.spotify.com/api/token', 
-			`grant_type=authorization_code&code=${code}&redirect_uri=${body.redirect_uri}`
+			`grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`
 			, {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
