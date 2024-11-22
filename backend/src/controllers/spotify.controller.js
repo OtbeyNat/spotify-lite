@@ -93,26 +93,29 @@ export const requestSpotify = async (req,res,next) => {
 		var code = req.query.code || null;
 		const body = {
 			grant_type: 'authorization_code',
-			code: code,
+			code,
 			redirect_uri: `${process.env.NODE_ENV === "development" ? `http://localhost:5000/api/spotify/request` : "https://spotify-lite.onrender.com/api/spotify/request"}`
 		};
-		// const response = await axios.post('https://accounts.spotify.com/api/token', body, {
-		// 	headers: {
-		// 		'Content-Type': 'application/x-www-form-urlencoded',
-		// 		'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),
-		// 	},
-		// });
-		const response = await fetch('https://accounts.spotify.com/api/token', {
-			method: 'POST',
+		const response = await axios.post('https://accounts.spotify.com/api/token', 
+			`grant_type=authorization_code&code=${code}&redirect_uri=${body.redirect_uri}`
+			, {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),
 			},
-			body: JSON.stringify(body),
-			
-			json: true
-		})
-		console.log(response);
+		});
+
+		// const response = await fetch('https://accounts.spotify.com/api/token', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/x-www-form-urlencoded',
+		// 		'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),
+		// 	},
+		// 	body: JSON.stringify(body),
+		// 	json: true
+		// })
+		const data = await response.json();
+		console.log(data);
 		res.redirect(`${process.env.NODE_ENV === "development" ? `http://localhost:3000/` : "https://spotify-lite.onrender.com/"}?access_token=${response.data.access_token}&refresh_token=${response.data.refresh_token}&expires_in=${response.data.expires_in}`)
 		// res.send(response.data);
 
