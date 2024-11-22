@@ -105,7 +105,7 @@ export const requestSpotify = async (req,res,next) => {
 		const response = await fetch('https://accounts.spotify.com/api/token', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
+				'content-type': 'application/x-www-form-urlencoded',
 				'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),
 			},
 			body: body,
