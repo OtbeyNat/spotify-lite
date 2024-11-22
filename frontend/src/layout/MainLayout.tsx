@@ -34,7 +34,6 @@ const MainLayout = () => {
         //     const result = await axiosInstance.get(`/spotify/profile?token=${localStorage.getItem("spotify_access_token")!}`);
         //     console.log(result);
         // };
-
         if (user) {
             console.log("homepage check")
             checkAccessToken()
@@ -43,7 +42,7 @@ const MainLayout = () => {
     },[])
 
     // useEffect runs when browser redirect with tokens in params
-    useEffect(() => {
+    useEffect(() => {        
         const accessToken = tokens.get('access_token');
         const refreshToken = tokens.get('refresh_token');
         const expires_in = tokens.get('expires_in');
