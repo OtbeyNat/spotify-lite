@@ -98,7 +98,7 @@ export const requestSpotify = async (req,res,next) => {
 		const body = {
 			grant_type: 'authorization_code',
 			code: code,
-			redirect_uri: `${process.env.NODE_ENV === "development" ? `http://localhost:5000/api/spotify/request` : "/api/spotify/request"}`
+			redirect_uri: `${process.env.NODE_ENV === "development" ? `http://localhost:5000/api/spotify/request` : "https://spotify-lite.onrender.com/api/spotify/request"}`
 		};
 		const response = await axios.post('https://accounts.spotify.com/api/token', body, {
 			headers: {
