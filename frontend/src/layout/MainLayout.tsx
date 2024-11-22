@@ -1,7 +1,7 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { Outlet } from "react-router-dom";
 import LeftSideBar from "./components/LeftSideBar";
-import FriendsAcitivity from "./components/FriendsAcitivity";
+import FriendsActivity from "./components/FriendsActivity";
 import { useEffect } from "react";
 import PlaybackControls from "./components/PlaybackControls";
 import { useUser } from "@clerk/clerk-react";
@@ -78,7 +78,7 @@ const MainLayout = () => {
 
                 {/* right side */}
                 <ResizablePanel defaultSize={isMobile ? 0 : 20} minSize={0} maxSize={isMobile ? 0 : 20} collapsedSize={0}>
-                    <FriendsAcitivity />
+                    <FriendsActivity />
                 </ResizablePanel>
             </ResizablePanelGroup>
             <PlaybackControls />

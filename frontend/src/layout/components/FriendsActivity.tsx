@@ -5,7 +5,7 @@ import { useUser } from "@clerk/clerk-react";
 import { HeadphonesIcon, Music, Users } from "lucide-react";
 import { useEffect } from "react";
 
-const FriendsAcitivity = () => {
+const FriendsActivity = () => {
     const { users, fetchUsers, onlineUsers, userActivities} = useChatStore();
     const { user } = useUser();
 
@@ -76,7 +76,7 @@ const FriendsAcitivity = () => {
     )
 }
 
-export default FriendsAcitivity
+export default FriendsActivity
 
 const LoginPrompt = () => (
 	<div className='h-full flex flex-col items-center justify-center p-6 text-center space-y-4'>
