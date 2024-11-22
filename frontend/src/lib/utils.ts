@@ -24,6 +24,7 @@ export const getToken = () => {
   console.log("getToken");
   const scope = 'user-read-email user-top-read user-read-recently-played';
   const client_id = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+  console.log(client_id);
   const redirect_uri = import.meta.env.MODE === "development" ? `http://localhost:5000/api/spotify/request` : "https://spotify-lite.onrender.com/api/spotify/request";
   window.location.href = `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=${scope}`;
 }

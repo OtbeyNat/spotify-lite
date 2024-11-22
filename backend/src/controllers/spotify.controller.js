@@ -91,6 +91,7 @@ export const searchItems = async (req,res,next) => {
 export const requestSpotify = async (req,res,next) => {
 	try {
 		// console.log(client_id,client_secret);
+		console.log("REQUEST SPOTIFY QUERY",req.query);
 		var code = req.query.code || null;
 		// res.redirect(
 		// 	`${process.env.NODE_ENV === 'development' ? 'http://localhost:3000/auth-callback/' : '/'}?code=${code}`
@@ -106,7 +107,7 @@ export const requestSpotify = async (req,res,next) => {
 				'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')),
 			},
 		})
-		res.redirect(`${process.env.NODE_ENV === "development" ? `http://localhost:3000/` : "/"}?access_token=${response.data.access_token}&refresh_token=${response.data.refresh_token}&expires_in=${response.data.expires_in}`)
+		res.redirect(`${process.env.NODE_ENV === "development" ? `http://localhost:3000/` : "https://spotify-lite.onrender.com/"}?access_token=${response.data.access_token}&refresh_token=${response.data.refresh_token}&expires_in=${response.data.expires_in}`)
 		// res.send(response.data);
 
 	} catch (error) {
