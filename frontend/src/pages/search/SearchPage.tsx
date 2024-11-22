@@ -5,7 +5,6 @@ import { axiosInstance } from "@/lib/axios";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
 // import { Song } from "@/types";
-import { SignedIn } from "@clerk/clerk-react";
 import { SearchIcon } from "lucide-react";
 import { useRef, useState } from "react"
 import { Link } from "react-router-dom";
