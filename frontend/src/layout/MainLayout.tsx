@@ -87,7 +87,7 @@ const MainLayout = () => {
 
                     </ResizablePanel>
 
-                    <ResizableHandle className="w-2 bg-black rounded-lg transition-colors m-1"/>
+                    <ResizableHandle className="w-2 bg-black rounded-lg transition-colors p-1.5"/>
                     
                     <ResizablePanel defaultSize={20} minSize={isMobile ? 0 : 10} maxSize={isMobile ? 100 : 20}>
                         <PlaybackControls />
