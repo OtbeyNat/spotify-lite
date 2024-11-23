@@ -6,14 +6,12 @@ import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
 // import { Song } from "@/types";
 import { SearchIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react"
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react"
+import { Link } from "react-router-dom";
 import PlayButton from "../home/components/PlayButton";
 import LoadMore from "./components/LoadMore";
-import { useChatStore } from "@/stores/useChatStore";
 
 const SearchPage = () => {
-
     const [ searchQuery, setSearchQuery ] = useState("")
     const [ offset, setOffset ] = useState(0);
     // const [ limit, setLimit ] = useState(12);
