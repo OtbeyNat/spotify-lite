@@ -25,7 +25,7 @@ const SearchPage = () => {
     // const [ results, setResults ] = useState([]);
 
     const loadMoreResults = async () => {
-        const result = await axiosInstance.get(`spotify/search?token=${localStorage.getItem("spotify_access_token")!}&search=${searchQuery}&type=track,album&limit=${limit.current}&offset=${offset}`);
+        const result = await axiosInstance.get(`spotify/search?token=${localStorage.getItem("spotify_access_token")!}&search=${currentSearchQuery}&type=track,album&limit=${limit.current}&offset=${offset}`);
         console.log(...result.data.tracks);
         useMusicStore.setState({songSearchResults: [...useMusicStore.getState().songSearchResults, ...result.data.tracks], albumSearchResults: [...useMusicStore.getState().albumSearchResults, ...result.data.albums],})
         setOffset((current) => current + limit.current)
@@ -77,7 +77,7 @@ const SearchPage = () => {
                 {/* add loading state? */}
                 <div className="flex items-center pt-4 mb-4 px-4 sm:px-6">
                     <div className="flex w-full justify-start">
-                        <p className="hidden sm:text-lg sm:inline-flex">{currentSearchQuery && `Previous Search: ${currentSearchQuery}`}</p>
+                        <p className="hidden sm:text-lg sm:inline-flex">{currentSearchQuery && `Current Search: ${currentSearchQuery}`}</p>
                     </div>
                     <div className="flex w-full justify-end gap-2">
                         <Button 

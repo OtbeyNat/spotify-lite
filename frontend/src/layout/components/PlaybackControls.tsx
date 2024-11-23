@@ -174,7 +174,9 @@ const PlaybackControls = () => {
                                     if (window.location.href.split('/')[3] === "lyrics") {
                                         navigate(-1);
                                     } else {
-                                        navigate("/lyrics");
+                                        if (currentLyrics.length > 0) {
+                                            navigate("/lyrics");
+                                        }
                                     }
                                 }}
                             >
@@ -207,7 +209,7 @@ const PlaybackControls = () => {
                     </div>
 
                     {/* lyrics */}
-                    {isMobile && currentLyrics.length > 0 && <ScrollArea className={cn("mt-4 h-[calc(100%-10vh)] bg-emerald-700 rounded-lg border-zinc-700/50 border-2 mb-4",!isPlaying && "hidden")}>
+                    {isMobile && currentLyrics.length > 0 && <ScrollArea className={cn("mt-4 h-[calc(100%-12vh)] bg-emerald-700 rounded-lg border-zinc-700/50 border-2 mb-4",!currentLyrics && "hidden")}>
                         <div className="space-y-2 items-center">  
                             {currentLyrics.map((line,index) => (
                                 <p key={index} className='text-center text-sm sm:text-xl font-bold'>
