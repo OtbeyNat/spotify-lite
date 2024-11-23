@@ -2,13 +2,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useChatStore } from "@/stores/useChatStore";
 import { usePlayerStore } from "@/stores/usePlayerStore"
-import { useNavigate } from "react-router-dom";
+import NotFoundPage from "../not-found/NotFoundPage";
 
 const LyricsPage = () => {
     const { isMobile } = useChatStore();
-    const navigate = useNavigate();
 
-    if (isMobile) navigate("/");
+    if (isMobile) return <NotFoundPage/>;
 
     const { currentLyrics, currentSong } = usePlayerStore();
 
