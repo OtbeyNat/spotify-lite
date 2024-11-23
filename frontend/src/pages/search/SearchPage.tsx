@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
 // import { Song } from "@/types";
 import { SearchIcon } from "lucide-react";
-import { useRef, useState } from "react"
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react"
+import { Link, redirect, useNavigate } from "react-router-dom";
 import PlayButton from "../home/components/PlayButton";
 import LoadMore from "./components/LoadMore";
+import { useChatStore } from "@/stores/useChatStore";
 
 const SearchPage = () => {
+
     const [ searchQuery, setSearchQuery ] = useState("")
     const [ offset, setOffset ] = useState(0);
     // const [ limit, setLimit ] = useState(12);
@@ -59,6 +61,11 @@ const SearchPage = () => {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className='bg-zinc-800 border-zinc-700'
+                            onKeyDown={(e) => {
+                                if (e.key ==='Enter') {
+                                    handleSearch();
+                                }
+                            }}
                         />
                         <SearchIcon 
                             className="absolute top-2.5 right-2 size-4 cursor-pointer"
@@ -68,7 +75,7 @@ const SearchPage = () => {
                 </div>
             </div>
             
-            <ScrollArea className="h-[calc(100vh-18vh)] bg-gradient-to-b from-zinc-900 to-zinc-800/50 rounded-md">
+            <ScrollArea className="h-[calc(100%-5vh)] bg-gradient-to-b from-zinc-900 to-zinc-800/50 rounded-md">
                 {/* add loading state? */}
                 <div className="flex items-center pt-4 mb-4 px-4 sm:px-6">
                     <div className="flex w-full justify-start">
@@ -99,9 +106,9 @@ const SearchPage = () => {
                 <div className='py-2 px-4 sm:px-6'>
                     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8'>      
                         {/* motiondiv */}
-                        {songSearchResults.map((song) => (
+                        {songSearchResults.map((song,index) => (
                             <div
-                                key={song.id}
+                                key={song.id+index.toString()}
                                 className='flex items-center bg-zinc-800/50 rounded-md overflow-hidden hover:bg-zinc-700/50 transition-colors group cursor-pointer relative'
                             >
                                 <img

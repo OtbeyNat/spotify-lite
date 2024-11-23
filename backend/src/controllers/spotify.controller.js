@@ -17,71 +17,53 @@ export const searchItems = async (req,res,next) => {
 		});
 
 		const trackResults = result.data.tracks.items;
-            var tracks = trackResults.map((item) => (
-                {
-                    id: item.id,
-                    title: item.name,
-                    artists: item.artists.map((artist) => (
-                        {
-                            artistName: artist.name,
-                            artistLink: artist.external_urls.spotify,
-                        }
-                    )),
-                    // albums: item.album,
-                    // albumId: "1",
-                    imageUrl: item.album.images[0].url,
-                    audioUrl: item.preview_url,
-                    trackUrl: item.external_urls.spotify,
-                    popularity: item.popularity,
-                    duration: item.duration_ms / 1000,
-                    releaseDate: item.album.release_date,
-                }
-            ));
+            var tracks = trackResults.map((item) => {
+                if (item) {
+					return {
+						id: item.id,
+						title: item.name,
+						artists: item.artists.map((artist) => (
+							{
+								artistName: artist.name,
+								artistLink: artist.external_urls.spotify,
+							}
+						)),
+						// albums: item.album,
+						// albumId: "1",
+						imageUrl: item.album.images[0].url,
+						audioUrl: item.preview_url,
+						trackUrl: item.external_urls.spotify,
+						popularity: item.popularity,
+						duration: item.duration_ms / 1000,
+						releaseDate: item.album.release_date,
+					}
+				}
+			});
             // console.log(tracks);
             const albumResults = result.data.albums.items;
-            var albums = albumResults.map((item) => (
-                {
-                    id: item.id,
-                    title: item.name,
-                    // artistSchema
-                    artists: item.artists.map((artist) => (
-                        {
-                            artistName: artist.name,
-                            artistLink: artist.external_urls.spotify,
-                        }
-                    )),
-                    imageUrl: item.images[0].url,
-                    totalTracks: item.total_tracks,
-                    releaseDate: item.release_date,
-                    songs: [],
-                }
-            ));
+			// console.log(albumResults)
+            var albums = albumResults.map((item) => {
+				if (item) {
+					return {
+						id: item.id,
+						title: item.name,
+						// artistSchema
+						artists: item.artists.map((artist) => (
+							{
+								artistName: artist.name,
+								artistLink: artist.external_urls.spotify,
+							}
+						)),
+						imageUrl: item.images[0].url,
+						totalTracks: item.total_tracks,
+						releaseDate: item.release_date,
+						songs: [],
+					}
+				}
+			});
             // console.log(albums);
 
 		res.json({tracks,albums});
-
-		// if (result) {
-			
-		// }
-		/* if type == "track"
-			const tracks = result.tracks.items => array of objects (results) set by limit
-
-			const track_name = tracks[i].name
-			const popularity = tracks[i].popularity
-			https://stackoverflow.com/questions/26055358/gradual-color-change-by-a-variable
-
-			const preview_url = tracks[i].preview_url
-			const external_url = tracks[i].external_urls.spotify
-			const duration = tracks[i].duration_ms
-			const image_url = tracks[i].images.[0].url
-
-			const artists = tracks[i].artists => ARRAY OF MULTIPLE ARTISTS
-			const artist_name = artists[i].name
-			consts artist_link = artists[i].external_urls.spotify
-			
-			const albums = tracks[i].albums
-			const release date = tracks[i].albums.release_date
-		*/
 
 	} catch (error) {
 		console.log("search error", error)

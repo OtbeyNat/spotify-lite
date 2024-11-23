@@ -9,6 +9,7 @@ import AlbumPage from "./pages/album/AlbumPage"
 import AdminPage from "./pages/admin/AdminPage"
 import NotFoundPage from "./pages/not-found/NotFoundPage"
 import SearchPage from "./pages/search/SearchPage"
+import LyricsPage from "./pages/lyrics/LyricsPage"
 
 function App() {
   
@@ -19,9 +20,10 @@ function App() {
         <Route path="/auth-callback" element={<AuthCallbackPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/search" element={<SearchPage />} />
+          <Route path="/" element={<HomePage />}/>
+          <Route path="/chat" element={<ChatPage />}/>
+          <Route path="/search" element={<SearchPage />}/>
+          <Route path="/lyrics" element={<LyricsPage />}/>
           <Route path="/albums/:albumId" element={<AlbumPage/>}/>
           <Route path="/*" element={<NotFoundPage/>}/>
         </Route>

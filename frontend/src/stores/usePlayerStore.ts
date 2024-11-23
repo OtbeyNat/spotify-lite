@@ -7,6 +7,7 @@ interface PlayerStore {
 	isPlaying: boolean;
 	queue: Song[];
 	currentIndex: number;
+	currentLyrics: string[];
 
 	initializeQueue: (songs: Song[]) => void;
 	// TODO: add song to queue
@@ -22,6 +23,7 @@ export const usePlayerStore = create<PlayerStore>((set,get) => ({
     isPlaying: false,
     queue: [],
 	currentIndex: -1,
+	currentLyrics: [],
 
 	initializeQueue: (songs: Song[]) => {
 		set({
