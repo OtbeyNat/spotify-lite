@@ -9,6 +9,7 @@ import { useChatStore } from "@/stores/useChatStore";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { checkAccessToken } from "@/lib/utils";
+import { usePlayerStore } from "@/stores/usePlayerStore";
 // import axios from "axios";
 // import { axiosInstance } from "@/lib/axios";
 // import { isTokenValid } from "@/lib/utils";
@@ -17,6 +18,7 @@ const MainLayout = () => {
     const { user } = useUser();
     const [ tokens ] = useSearchParams();
     const { isMobile } = useChatStore();
+    const { currentLyrics } = usePlayerStore();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -89,7 +91,7 @@ const MainLayout = () => {
 
                     <ResizableHandle className="w-2 bg-black rounded-lg transition-colors p-1.5"/>
                     
-                    <ResizablePanel defaultSize={20} minSize={isMobile ? 0 : 10} maxSize={isMobile ? 100 : 20}>
+                    <ResizablePanel defaultSize={20} minSize={isMobile ? 0 : 10} maxSize={isMobile && currentLyrics.length > 0 ? 100 : 20}>
                         <PlaybackControls />
                     </ResizablePanel>
 
