@@ -2,7 +2,7 @@
 Spotify Lite is a lightweight version of the popular music streaming service using the latest web development features and Spotify's Web API.\
 Spotify Lite is a full stack MERN application using React (Vite) for frontend, Express and Node for backend, and MongoDB for data management.\
 
-This web application was NOT developed for commercial use; Spotify LITE purpose is for recreational use and personal learning experience only.
+This web application was NOT developed for commercial use and is NOT meant for real-time, real-world production; Spotify LITE purpose is for recreational use and personal learning experience only.
 
 https://spotify-lite.onrender.com \
 (takes about a minute to load when no user traffic on site; afterwards renders as normal)\
