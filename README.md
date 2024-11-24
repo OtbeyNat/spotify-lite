@@ -8,15 +8,15 @@ https://spotify-lite.onrender.com \
 (takes about a minute to load when no user traffic on site; afterwards renders as normal)\
 
 Key Features Include:
-- Pause/Play/Skip/Repeat real songs
+- Search/Pause/Play/Skip/Repeat Tracks
+- Search/Pause/Play/View Albums
 - Songs and Playlists Management with MongoDB (Create, Read, Update, Delete)
 - User Authentication using Clerk and Google -- WIP: Spotify provider
 - Real-time Messaging and Activity status with socket.io
-- WIP: Spotify Web API Integration for Music Streaming and Playlist Management
-- ...many more WIP
+- ... more WIP
 
 Disclaimer:
-This project is for educational purposes only. It is not affiliated with Spotify or any of its subsidiaries. @OtbeyNat's Spotify LITE DOES NOT comply with Spotify's Developer Policy (https://developer.spotify.com/policy). In order to have full functionalities of the app, you must have a Spotify account AND have a registered account for @OtbeyNat's Spotify LITE (registering an account can only be done manually and is limited to 25 accounts due to the basic plan's quota - in order to extend the quota to as many users as possible, an extension request has to be made to Spotify)
+This project is for educational purposes only. It is not affiliated with Spotify or any of its subsidiaries. @OtbeyNat's Spotify LITE DOES NOT comply with Spotify's Developer Policy (https://developer.spotify.com/policy). In order to have full functionalities of the app, you must have a Spotify account AND have a registered account for @OtbeyNat's Spotify LITE (registering an account can only be done manually and is limited to 25 accounts due to the basic plan's quota - in order to extend the quota to as many users as possible, an extension request has to be made to Spotify). For any concerns or inquiries about this application, please email tctan317@gmail.com
 
 Credits:\
 Spotify LITE core functionalities were made possible thanks to Spotify's Web API - https://developer.spotify.com/documentation/web-api \
