@@ -1,6 +1,7 @@
 import Topbar from "@/components/Topbar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 // import { axiosInstance } from "@/lib/axios";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { usePlayerStore } from "@/stores/usePlayerStore";
@@ -189,7 +190,7 @@ const AlbumPage = () => {
 														<div className='flex items-center gap-3'>
 															{/* <img src={song.imageUrl} alt={song.title} className='size-10' /> */}
 															<div>
-																<div className={`font-medium text-white select-none`}>{song.title}</div>
+																<div className={cn('font-medium text-white select-none',isCurrentSong && 'text-green-500')}>{song.title}</div>
 																<div className='text-sm flex text-zinc-400 truncate gap-1 select-none'>
 																	{song.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
 																</div>
