@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 export const artistSchema = new mongoose.Schema({
     artist_name: {type: String, required: true},
     artist_link: {type: String, required: true},
+    artist_id: {type: String, required: true},
 })
 
 const songSchema = new mongoose.Schema(

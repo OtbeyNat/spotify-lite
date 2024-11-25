@@ -3,6 +3,102 @@ import axios from "axios";
 var client_id = process.env.SPOTIFY_CLIENT_ID;
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 
+export const getAlbumsForArtist = async (req,res,next) => {
+	try {
+		const artistId = req.params.artistId;
+		const token = req.query.token;
+		const offset = req.query.offset;
+		const limit = req.query.limit;
+		const response = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/albums?include_groups=album,single&offset=${offset}&limit=${limit}`, {
+			headers: { 'Authorization': `Bearer ${token}` }
+		});
+		const albums = response.data.items.map((album) => ({
+			id: album.id,
+			title: album.name,
+			// artistSchema
+			artists: album.artists.map((artist) => (
+				{
+					artistName: artist.name,
+					artistLink: artist.external_urls.spotify,
+					artistId: artist.id,
+				}
+			)),
+			imageUrl: album.images[0].url,
+			releaseDate: album.release_date,
+		}));
+		res.json({albums});
+	} catch (error) {
+		console.log("getAlbumsForArtist", error);
+	}
+}
+
+export const getTrackScoresForAlbum = async (req,res,next) => {
+	try {
+		const ids = req.query.ids;
+		const token = req.query.token;
+		const response = await axios.get(`https://api.spotify.com/v1/tracks?ids=${ids}`,{
+			headers: { 'Authorization': `Bearer ${token}` }
+		});
+		const scores = response.data.tracks.map((track) => (track.popularity))
+		res.json({scores});
+	} catch (error) {
+		console.log("getTrackScoresForAlbum error", error);
+	}
+}
+
+export const getSpotifyAlbumById = async (req,res,next) => {
+	try {
+		const albumId = req.params.albumId;
+		const token = req.query.token;
+		const response = await axios.get(`https://api.spotify.com/v1/albums/${albumId}`, {
+			headers: { 'Authorization': `Bearer ${token}` }
+		});
+		// console.log(result);
+
+		res.send({
+			id: response.data.id,
+			albumType: response.data.album_type,
+			title: response.data.name,
+			artists: response.data.artists.map((artist) => (
+				{
+					artistName: artist.name,
+					artistLink: artist.external_urls.spotify,
+					artistId: artist.id,
+				}
+			)),
+			imageUrl: response.data.images[0].url,
+			totalTracks: response.data.total_tracks,
+			releaseDate: response.data.release_date,
+			albumUrl: response.data.external_urls.spotify,
+			copyrights: response.data.copyrights,
+			songs: response.data.tracks.items.map((song) => (
+				{
+					id: song.id,
+					title: song.name,
+					artists: song.artists.map((artist) => (
+						{
+							artistName: artist.name,
+							artistLink: artist.external_urls.spotify,
+							artistId: artist.id,
+						}
+					)),
+					// albums: item.album,
+					// albumId: "1",
+					imageUrl: response.data.images[0].url,
+					audioUrl: song.preview_url,
+					trackUrl: song.external_urls.spotify,
+					popularity: 100,
+					duration: song.duration_ms / 1000,
+					releaseDate: response.data.release_date,
+				}
+			))
+		});
+
+	} catch (error) {
+		console.log("getSpotifyAlbumById Error", error)
+	}
+	
+}
 
 export const searchItems = async (req,res,next) => {
 	try {
@@ -26,6 +122,7 @@ export const searchItems = async (req,res,next) => {
 							{
 								artistName: artist.name,
 								artistLink: artist.external_urls.spotify,
+								artistId: artist.id,
 							}
 						)),
 						// albums: item.album,
@@ -52,6 +149,7 @@ export const searchItems = async (req,res,next) => {
 							{
 								artistName: artist.name,
 								artistLink: artist.external_urls.spotify,
+								artistId: artist.id,
 							}
 						)),
 						imageUrl: item.images[0].url,
