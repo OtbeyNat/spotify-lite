@@ -6,7 +6,7 @@ import { useChatStore } from "@/stores/useChatStore";
 import { usePlayerStore } from "@/stores/usePlayerStore"
 import { SignedIn } from "@clerk/clerk-react";
 import axios from "axios";
-import { ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
+import { ListMusic, Mic2, Pause, Play, PlusCircle, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -105,6 +105,11 @@ const PlaybackControls = () => {
                                             {currentSong.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
                                         </div>
                                     </div>
+                                    <div className="flex justify-end items-center">
+                                        {/* TODO: if track saved, show green check else on hover show + */}
+                                        {/* <Check className="rounded-full bg-green-500 size-6 text-black text-sm"/> */}
+                                        <PlusCircle className="bg-transparent size-6 rounded-full text-zinc-500 group-hover:flex hover:bg-transparent hover:text-white"/>
+                                    </div>
                                 </>
                             )}
                         </div>
@@ -167,7 +172,7 @@ const PlaybackControls = () => {
                             </div>
                         </div>
                         {/* volume */}
-                        <div className='flex items-center gap-4 md:min-w-[180px] lg:w-[30%] justify-end'>
+                        <div className='hidden sm:flex items-center gap-4 md:min-w-[180px] lg:w-[30%] justify-end'>
                             <Button size='icon' variant='ghost' 
                                 className={cn('hidden sm:flex',window.location.href.split('/')[3] !== "lyrics" ? "hover:text-green-400 text-zinc-400" : "text-green-400 hover:text-zinc-400")}
                                 onClick={() => {
