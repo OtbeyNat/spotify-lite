@@ -1,6 +1,17 @@
+export interface AlbumScoreInfo {
+	albumId: string;
+	scores: [{id: string;score: number;}]
+}
+
 export interface ArtistSongInfo {
 	artistName: string;
 	artistLink: string;
+	artistId: string;
+}
+
+export interface CopyRightInfo {
+	text: string;
+	type: string;
 }
 
 export interface Song {
@@ -19,16 +30,26 @@ export interface Song {
 	updatedAt: string;
 }
 
-export interface Album {
-	_id: string;
-	id: string
+export interface BasicAlbumInfo {
+	id: string;
 	title: string;
 	artists: ArtistSongInfo[];
 	imageUrl: string;
-	totalTraacks: number;
 	releaseDate: string;
-	releaseYear: number;
+}
+
+export interface Album {
+	_id: string;
+	id: string;
+	albumType: string;
+	title: string;
+	artists: ArtistSongInfo[];
+	imageUrl: string;
+	albumUrl: string;
+	totalTracks: number;
+	releaseDate: string;
 	songs: Song[];
+	copyrights: CopyRightInfo[];
 	createdAt: string;
 	updatedAt: string;
 }

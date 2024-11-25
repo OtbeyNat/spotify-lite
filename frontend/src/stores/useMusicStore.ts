@@ -1,9 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
-import { Album, Song, Stats } from "@/types";
+import { Album, AlbumScoreInfo, BasicAlbumInfo, Song, Stats } from "@/types";
 import toast from "react-hot-toast";
 import { create } from "zustand";
-
-
 
 interface MusicStore {
 	songs: Song[];
@@ -14,6 +12,8 @@ interface MusicStore {
 	isFetchStatsLoading: boolean;
 	error: string | null;
 	currentAlbum: Album | null;
+	currentAlbumScores: AlbumScoreInfo | null;
+	albumPageExtras: BasicAlbumInfo[] | null;
 
 	featuredSongs: Song[];
 	madeForYouSongs: Song[];
@@ -21,14 +21,17 @@ interface MusicStore {
 
 	songSearchResults: Song[];
 	currentSearchQuery: string | null;
-	currentSearchType: "Tracks" | "Albums";
+	currentSearchType: string;
 	albumSearchResults: Album[];
 	// cache results somewhere
 
 	stats: Stats;
 
+	fetchTrackScoresForAlbum: (ids: string) => Promise<void>;
+	fetchSpotifyAlbumById: (id: string) => Promise<void>;
+	fetchExtraAlbumsByArtist: (id: string, offset: number, limit: number) => Promise<void>;
+	
 	fetchAlbums: () => Promise<void>;
-	fetchAlbumById: (id: string) => Promise<void>;
 	fetchFeaturedSongs: () => Promise<void>;
 	fetchMadeForYouSongs: () => Promise<void>;
 	fetchTrendingSongs: () => Promise<void>;
@@ -38,7 +41,7 @@ interface MusicStore {
 	deleteAlbum: (id: string) => Promise<void>;
 }
 
-export const useMusicStore = create<MusicStore>((set) => ({
+export const useMusicStore = create<MusicStore>((set,get) => ({
     albums: [],
 	songs: [],
     isLoading: false,
@@ -47,11 +50,13 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	isFetchStatsLoading: false,
     error: null,
 	currentAlbum: null,
+	currentAlbumScores: null,
 	madeForYouSongs: [],
 	featuredSongs: [],
 	trendingSongs: [],
 	songSearchResults: [],
 	albumSearchResults: [],
+	albumPageExtras: [],
 	currentSearchQuery: "",
 	currentSearchType: "Tracks",
 	stats: {
@@ -129,12 +134,43 @@ export const useMusicStore = create<MusicStore>((set) => ({
 			set({ isFetchAlbumsLoading: false });
 		}
 	},
-	// TODO: fetchAlbumsByUserId
-	fetchAlbumById: async (id) => {
+	fetchTrackScoresForAlbum: async (ids:string) => {
 		set({isLoading: true,error: null});
 		try {
-			const response = await axiosInstance.get(`/albums/${id}`);
-			set({ currentAlbum: response.data });
+			const response = await axiosInstance.get(`/spotify/scores?token=${localStorage.getItem("spotify_access_token")}&ids=${ids}`);
+			const scores = response.data.scores;
+			const albumWithScores = {...get().currentAlbum!, songs: get().currentAlbum!.songs.map((song,index) => ({
+				...song, popularity: scores[index],
+			}))};
+			console.log(albumWithScores);
+			set({currentAlbumScores: {albumId: get().currentAlbum!.id,scores}, currentAlbum: albumWithScores});
+		} catch (error: any ) {
+			set({ error: error.response.data.message });
+		} finally {
+			set({ isLoading: false });
+		}
+		
+	},
+	fetchExtraAlbumsByArtist: async (id,offset,limit) => {
+		set({isLoading: true,error: null});
+		try {
+			const response = await axiosInstance.get(`/spotify/artist/albums/${id}?offset=${offset}&limit=${limit}&token=${localStorage.getItem("spotify_access_token")}`);
+			console.log(response.data.albums);
+			set({albumPageExtras: response.data.albums})
+		} catch (error:any) {
+			set({ error: error.response.data.message });
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+
+	// TODO: fetchAlbumsByUserId
+	fetchSpotifyAlbumById: async (id) => {
+		set({isLoading: true,error: null});
+		try {
+			const response = await axiosInstance.get(`/spotify/album/${id}?token=${localStorage.getItem("spotify_access_token")}`);
+			// console.log(response);
+			set({ currentAlbum: response.data});
 		} catch (error: any) {
 			set({ error: error.response.data.message });
 		} finally {
