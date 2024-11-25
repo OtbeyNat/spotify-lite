@@ -212,7 +212,7 @@ const AlbumPage = () => {
 									<div className='px-5 sm:px-8 pb-4 flex flex-col justify-start select-none'>
 										<p className="text-sm text-zinc-400">{formattedReleaseDate}</p>
 										{currentAlbum?.copyrights.map((line,index) => (
-											<p key={index} className='text-xs text-zinc-400'>{line.type === "C" ? "©" : "℗"} {line.text}</p>
+											<p key={index} className='text-xs text-zinc-400'>{line.type === "C" && line.text.charAt(0) !== "©" && "©"}{line.type === "P" && line.text.charAt(0) !== "℗" && "℗"} {line.text}</p>
 										))}
 									</div>
 									{/* TODO: More Albums By Artist */}
