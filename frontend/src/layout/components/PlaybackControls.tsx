@@ -85,7 +85,7 @@ const PlaybackControls = () => {
     return (
         <footer className='h-full bg-zinc-900 border-t border-zinc-800 px-4 oveflow-hidden items-center'>
             <SignedIn>
-                <div className='h-full max-w-[1800px] mx-auto justify-center items-center pt-4'>
+                <div className='h-full max-w-[1800px] mx-auto justify-center items-center pt-4 px-2'>
                     {/* current song */}
                     <div className="flex justify-between items-center my-2">
                         <div className='flex items-center gap-4 md:min-w-[180px] lg:w-[30%]'>
@@ -155,7 +155,7 @@ const PlaybackControls = () => {
                                 </Button>
                             </div>
                             <div className='hidden sm:flex items-center gap-2 w-full'>
-                                <div className='text-xs text-zinc-400'>{formatTime(currentTime)}</div>
+                                <div className='text-xs text-zinc-400 select-none'>{formatTime(currentTime)}</div>
                                 <Slider
                                     value={[currentTime]}
                                     max={duration || 100}
@@ -163,7 +163,7 @@ const PlaybackControls = () => {
                                     className='w-full hover:cursor-grab active:cursor-grabbing rounded-md'
                                     onValueChange={handleSeek}
                                 />
-                                <div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
+                                <div className='text-xs text-zinc-400 select-none'>{formatTime(duration)}</div>
                             </div>
                         </div>
                         {/* volume */}

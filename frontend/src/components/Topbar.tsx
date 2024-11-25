@@ -14,21 +14,17 @@ const Topbar = () => {
         <div className="flex items-center justify-between py-5 px-4 sm:px-6 sticky top-0 bg-zinc-900/75 backdrop-blur-md z-10 rounded-md">
             <div className="flex gap-2 items-center select-none">
                 <Link to={"/"}>
-                    <img src="spotify.png" alt="logo" className="size-8"/>
+                    <img src="/spotify.png" alt="logo" className="size-8"/>
                 </Link>
                 <p className="hidden sm:inline">Spotify LITE</p>
             </div>
-            <div className="flex items-center gap-4">
-                <SignedIn>
-                    {/* <Button onClick={getToken}>
-                        Spotify Auth
-                    </Button> */}
+            <div className="max-sm:w-[75%] flex justify-between items-center sm:gap-4">
                     {isMobile && 
                         <Link
                             to={"/chat"}
                             className={cn(buttonVariants({
                                     variant: "ghost",
-                                    className: "text-white hover:bg-zinc-800",
+                                    className: "text-white hover:bg-zinc-800 p-0",
                             }))}
                         >
                             <MessageCircle className='size-3' />
@@ -39,20 +35,19 @@ const Topbar = () => {
                             to={"/search"}
                             className={cn(buttonVariants({
                                     variant: "ghost",
-                                    className: "text-white hover:bg-zinc-800",
+                                    className: "text-white hover:bg-zinc-800 p-0",
                             }))}
                         >
                             <Search className='size-3' />
                         </Link>
                     }
                     <Link to={"/admin"} className={cn(buttonVariants({
-                        variant: "outline"
+                        variant: "ghost",
+                        className: "max-sm:p-0"
                     }))}>
-                        <LayoutDashboardIcon className="size-4 mr-2"/>
-                        Dashboard
+                        <LayoutDashboardIcon className="size-3"/>
+                        {isMobile ? '' : <div className="select-none">Dashboard</div>}
                     </Link>
-                </SignedIn>
-
                 <SignedOut>
                     <SignInOAuthButtons/>
                 </SignedOut>

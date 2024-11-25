@@ -9,7 +9,6 @@ import { SignedIn } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 
 const HomePage = () => {
-
   const {
     fetchFeaturedSongs,
     fetchMadeForYouSongs,
@@ -38,7 +37,8 @@ const HomePage = () => {
   return (
     <div className="rounded-md space-y-2 h-full">
       <Topbar/>
-      <ScrollArea className="h-[calc(100vh-17vh)] bg-gradient-to-b from-zinc-900 to-zinc-800/50 rounded-md">
+      {/* h-[calc(100vh-17vh)] */}
+      <ScrollArea className="h-[calc(100%-80px)] bg-gradient-to-b from-zinc-900 to-zinc-800/50 rounded-md">
         <div className='p-4 sm:p-6 mb-[6rem]'>
 					<SignedIn>
           <div className="flex items-center justify-between mb-4">

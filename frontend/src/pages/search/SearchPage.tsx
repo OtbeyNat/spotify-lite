@@ -7,11 +7,12 @@ import { useMusicStore } from "@/stores/useMusicStore";
 // import { Song } from "@/types";
 import { SearchIcon } from "lucide-react";
 import { useRef, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PlayButton from "../home/components/PlayButton";
 import LoadMore from "./components/LoadMore";
 
 const SearchPage = () => {
+    const navigate = useNavigate();
     const [ searchQuery, setSearchQuery ] = useState("")
     const [ offset, setOffset ] = useState(0);
     // const [ limit, setLimit ] = useState(12);
@@ -87,7 +88,7 @@ const SearchPage = () => {
                                 useMusicStore.setState({currentSearchType: "Tracks"});
                             }}
                         >
-                            Tracks
+                            Songs
                         </Button>
                         <Button 
                             className={cn("h-6 rounded-full",showType === "Albums" && "text-black bg-emerald-600 hover:text-white hover:bg-zinc-800",showType !== "Albums" && "text-white bg-zinc-800 hover:text-black hover:bg-emerald-600")}
@@ -142,13 +143,14 @@ const SearchPage = () => {
                                                 src={album.imageUrl}
                                                 alt={album.title}
                                                 className='object-cover transition-transform duration-300 
-                                                group-hover:scale-105'
+                                                group-hover:scale-105 cursor-pointer'
+                                                onClick={() => {navigate(`/albums/${album.id}`)}}
                                             />
                                         </div>
                                     </div>
                                     <h3 className='font-medium mb-2 truncate'>{album.title}</h3>
                                     <div className='text-sm flex text-zinc-400 truncate gap-1 select-none'>
-                                        {album.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
+                                      {album.releaseDate.split('-')[0]} • {album.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
                                     </div>
                                 </div>
                             ))}

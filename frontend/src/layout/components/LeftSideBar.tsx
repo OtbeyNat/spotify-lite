@@ -36,7 +36,7 @@ const LeftSideBar = () => {
                         )}
                     >
                         <HomeIcon className="mr-2 size-5"/>
-                        <span className="hidden md:inline truncate">Home</span>
+                        <span className="hidden md:inline truncate select-none">Home</span>
                     </Link>
 
                     <SignedIn>
@@ -51,7 +51,7 @@ const LeftSideBar = () => {
                             )}
                         >
                             <MessageCircle className='mr-2 size-5' />
-                            <span className='hidden md:inline truncate'>Messages</span>
+                            <span className='hidden md:inline truncate select-none'>Messages</span>
                         </Link>
                         <Link
                             to={"/search"}
@@ -64,7 +64,7 @@ const LeftSideBar = () => {
                             )}
                         >
                             <Search className='mr-2 size-5' />
-                            <span className='hidden md:inline truncate'>Search</span>
+                            <span className='hidden md:inline truncate select-none'>Search</span>
                         </Link>
                     </SignedIn>
                 </div>
