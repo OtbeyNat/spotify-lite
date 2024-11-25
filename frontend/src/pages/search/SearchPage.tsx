@@ -5,11 +5,13 @@ import { axiosInstance } from "@/lib/axios";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
 // import { Song } from "@/types";
-import { SearchIcon } from "lucide-react";
+import { Clock, Play, PlusCircle, SearchIcon } from "lucide-react";
 import { useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
-import PlayButton from "../home/components/PlayButton";
 import LoadMore from "./components/LoadMore";
+import { usePlayerStore } from "@/stores/usePlayerStore";
+import { Song } from "@/types";
+import { formatDuration } from "../album/AlbumPage";
 
 const SearchPage = () => {
     const navigate = useNavigate();
@@ -19,6 +21,8 @@ const SearchPage = () => {
     const limit = useRef(12);
     const [ showType, setShowType ] = useState(useMusicStore.getState().currentSearchType);
     const { songSearchResults, albumSearchResults, currentSearchQuery } = useMusicStore();
+    const { currentSong, isPlaying, togglePlay, initializeQueue, setCurrentSong } = usePlayerStore();
+
     // const [ searchResults, setSearchResults ] = useState<Song[]>([])
 
     // const [ query ] = useSearchParams();
@@ -29,6 +33,7 @@ const SearchPage = () => {
         const result = await axiosInstance.get(`spotify/search?token=${localStorage.getItem("spotify_access_token")!}&search=${currentSearchQuery}&type=track,album&limit=${limit.current}&offset=${offset}`);
         console.log(...result.data.tracks);
         useMusicStore.setState({songSearchResults: [...useMusicStore.getState().songSearchResults, ...result.data.tracks], albumSearchResults: [...useMusicStore.getState().albumSearchResults, ...result.data.albums],})
+        initializeQueue([...useMusicStore.getState().songSearchResults, ...result.data.tracks]);
         setOffset((current) => current + limit.current)
     }
 
@@ -39,9 +44,15 @@ const SearchPage = () => {
             const result = await axiosInstance.get(`spotify/search?token=${localStorage.getItem("spotify_access_token")!}&search=${searchQuery}&type=track,album&limit=${limit.current}&offset=${offset}`);
             console.log(result.data);
             
-            useMusicStore.setState({songSearchResults: result.data.tracks, albumSearchResults: result.data.albums, currentSearchQuery: searchQuery})
+            useMusicStore.setState({songSearchResults: result.data.tracks, albumSearchResults: result.data.albums, currentSearchQuery: searchQuery});
+            initializeQueue(result.data.tracks);
             setOffset((current) => current + limit.current)
         }
+    }
+
+    const handlePlaySong = (song: Song) => {
+        if (currentSong?.id === song.id) togglePlay();
+        else setCurrentSong(song);
     }
 
     return (
@@ -78,7 +89,7 @@ const SearchPage = () => {
                 {/* add loading state? */}
                 <div className="flex items-center pt-4 mb-4 px-4 sm:px-6">
                     <div className="flex w-full justify-start">
-                        <p className="hidden sm:text-lg sm:inline-flex">{currentSearchQuery && `Current Search: ${currentSearchQuery}`}</p>
+                        <p className="hidden sm:text-lg sm:font-bold sm:inline-flex">{currentSearchQuery && `Current Search: ${currentSearchQuery}`}</p>
                     </div>
                     <div className="flex w-full justify-end gap-2">
                         <Button 
@@ -102,31 +113,104 @@ const SearchPage = () => {
                     </div>
                 </div>
                 {showType === "Tracks" && 
-                <div className='py-2 px-4 sm:px-6'>
-                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8'>      
-                        {/* motiondiv */}
-                        {songSearchResults.map((song,index) => (
-                            <div
-                                key={song.id+index.toString()}
-                                className='flex items-center bg-zinc-800/50 rounded-md overflow-hidden hover:bg-zinc-700/50 transition-colors group cursor-pointer relative'
-                            >
-                                <img
-                                    src={song.imageUrl}
-                                    alt={song.title}
-                                    className='w-16 sm:w-20 h-16 sm:h-20 object-cover flex-shrink-0'
-                                />
-                                <div className='flex-1 p-4'>
-                                    <p className='font-medium truncate'>{song.title}</p>
-                                    <div className='text-sm flex text-zinc-400 truncate gap-1 select-none'>
-                                        {song.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
-                                    </div>
+                // <div className='py-2 px-4 sm:px-6'>
+                //     <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8'>      
+                //         {/* motiondiv */}
+                //         {songSearchResults.map((song,index) => (
+                //             <div
+                //                 key={song.id+index.toString()}
+                //                 className='flex items-center bg-zinc-800/50 rounded-md overflow-hidden hover:bg-zinc-700/50 transition-colors group cursor-pointer relative'
+                //             >
+                //                 <img
+                //                     src={song.imageUrl}
+                //                     alt={song.title}
+                //                     className='w-16 sm:w-20 h-16 sm:h-20 object-cover flex-shrink-0'
+                //                 />
+                //                 <div className='flex-1 p-4'>
+                //                     <p className='font-medium truncate'>{song.title}</p>
+                //                     <div className='text-sm flex text-zinc-400 truncate gap-1 select-none'>
+                //                         {song.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
+                //                     </div>
                                     
-                                </div>
-                                <PlayButton song={song} />
+                //                 </div>
+                //                 <PlayButton song={song} />
+                //             </div>
+                //         ))}
+                //     </div>
+                // </div>
+                    <div className="py-2 sm:px-6">
+                        {songSearchResults.length > 0 && 
+                            <div className='hidden sm:grid sm:grid-cols-[16px_2fr_1fr_1fr_0.25fr] gap-4 py-2 px-4 sm:px-6 text-sm text-zinc-400 border-b border-white/5 select-none'>
+                                <div>#</div>
+                                <div>Title</div>
+                                <div className="flex items-center justify-end">Album</div>
+                                <div/>
+                                <div className="flex items-center justify-end"><Clock className='h-4 w-4'/></div>
                             </div>
-                        ))}
+                        }
+                        <div className="max-sm:space-y-2">
+                            {songSearchResults.map((song,index) => {
+                                const isCurrentSong = currentSong?.id === song.id;
+                                return (
+                                    <>
+                                        <div className="max-sm:hidden sm:px-6">
+                                            <div 
+                                                key={song.id+index.toString()}
+                                                className={`sm:grid sm:grid-cols-[16px_2fr_1fr_1fr_0.25fr] gap-4 py-2 text-sm text-zinc-400 hover:bg-white/5 rounded-md group cursor-pointer items-center`}
+                                                onDoubleClick={() => handlePlaySong(song)}
+                                            >
+                                                <div 
+                                                    className='sm:flex items-center select-none'
+                                                    onClick={() => handlePlaySong(song)}
+                                                >
+                                                    {isCurrentSong && isPlaying ? (
+                                                        <div className='size-4 text-green-500'>♫</div>
+                                                    ) : (
+                                                        <span className='group-hover:hidden'>{index + 1}</span>
+                                                    )}
+                                                    {!isCurrentSong && (
+                                                        <Play className='h-4 w-4 hidden group-hover:block' />
+                                                    )}
+                                                </div>
+
+                                                <div className='flex items-center gap-3'>
+                                                    <img src={song.imageUrl} alt={song.title} className='rounded-md size-10 select-none' />
+                                                    <div className="">
+                                                        <div className={cn('font-medium text-white truncate select-none', isCurrentSong && 'text-green-500')}>{song.title}</div>
+                                                        <div className='text-sm flex text-zinc-400 truncate gap-1 select-none'>
+                                                            {song.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className='flex items-center justify-end select-none'>{song.popularity}</div>
+                                                <div className="flex justify-end items-center">
+                                                    {/* TODO: if track saved, show green check else on hover show + */}
+                                                    {/* <Check className="rounded-full bg-green-500 size-4 text-black text-sm"/> */}
+                                                    <PlusCircle className="hidden bg-transparent size-4 rounded-full text-zinc-500 group-hover:flex hover:bg-transparent hover:text-white"/>
+                                                </div>
+                                                <div className='flex items-center justify-end select-none'>{formatDuration(song.duration)}</div>
+                                            </div>
+                                        </div>
+
+                                        <div className="max-sm:px-6 sm:hidden">
+                                            <div 
+                                                key={song.id+index.toString()}
+                                                className="text-sm text-zinc-400 hover:bg-white/5 rounded-md group cursor-pointer items-center"
+                                                onDoubleClick={() => handlePlaySong(song)}
+                                            >
+                                                <div>
+                                                    <div className={cn('font-medium text-white truncate select-none', isCurrentSong && 'text-green-500')}>{song.title}</div>
+                                                    <div className='text-sm text-zinc-400 truncate space-x-1 select-none'>
+                                                        {song.artists.map((artist) => <a key={artist.artistName} target="_blank" className="hover:underline cursor-pointer after:content-[','] last:after:content-['']" href={artist.artistLink}>{artist.artistName}</a>)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            })}
+                        </div>
                     </div>
-                </div>
                 }
 
                 {showType === "Albums" && 
