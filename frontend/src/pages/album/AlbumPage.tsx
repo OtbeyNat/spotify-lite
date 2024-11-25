@@ -1,12 +1,11 @@
 import Topbar from "@/components/Topbar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useChatStore } from "@/stores/useChatStore";
 // import { axiosInstance } from "@/lib/axios";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 // import { usePlayerStore } from "@/stores/usePlayerStore";
-import { Check, Clock, Loader, Pause, Play, PlusCircle } from "lucide-react";
+import { Clock, Loader, Pause, Play, PlusCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
