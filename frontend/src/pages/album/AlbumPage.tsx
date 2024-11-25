@@ -136,7 +136,7 @@ const AlbumPage = () => {
 									</div>
 								</div>
 								{/* play button */}
-								<div className='px-6 sm:pl-10 pb-4 pt-2 flex items-center gap-6'>
+								<div className='px-6 sm:pl-10 py-4 flex items-center gap-6'>
 									<Button
 										onClick={handlePlayAlbum}
 										size='icon'
