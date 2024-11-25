@@ -20,7 +20,7 @@ const AlbumsTable = () => {
 					<TableHead className='w-[50px]'></TableHead>
 					<TableHead>Title</TableHead>
 					<TableHead>Artist</TableHead>
-					<TableHead>Release Year</TableHead>
+					<TableHead>Release Date</TableHead>
 					<TableHead>Songs</TableHead>
 					<TableHead className='text-right'>Actions</TableHead>
 				</TableRow>
@@ -43,7 +43,7 @@ const AlbumsTable = () => {
 						<TableCell>
 							<span className='inline-flex items-center gap-1 text-zinc-400'>
 								<Calendar className='h-4 w-4' />
-								{album.releaseYear}
+								{album.releaseDate}
 							</span>
 						</TableCell>
 						<TableCell>
