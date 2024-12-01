@@ -20,6 +20,6 @@ This project is for educational purposes only. It is not affiliated with Spotify
 
 Credits:\
 Spotify LITE core functionalities were made possible thanks to Spotify's Web API - https://developer.spotify.com/documentation/web-api \
-Spotify LITE was made solely from the dedicated time and effort from @burakorkmez. @OtbeyNat watched @burakorkmez's in order to build the application from scratch, incorporated his own features, and implemented Spotify's official Web API as a part of his learning experience \
+Spotify LITE was made solely from the dedicated time and effort from @burakorkmez. @OtbeyNat watched @burakorkmez's tutorial video in order to build the application from scratch, incorporated his own features, and implemented Spotify's official Web API as a part of his learning experience \
 https://github.com/burakorkmez/realtime-spotify-clone/tree/master \
 https://www.youtube.com/watch?v=4sbklcQ0EXc
