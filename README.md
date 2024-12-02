@@ -18,7 +18,7 @@ Key Features Include:
 Disclaimer:\
 Spotify has updated their web api for security/safety reasons and REMOVED 30 second preview urls from their endpoints. As a result, the playback functionality of this application does not work anymore. However, the rest of Spotify LITE works as intended.\
 https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api \
-https://community.spotify.com/t5/Spotify-for-Developers/Changes-to-Web-API/td-p/6540414 \
+https://community.spotify.com/t5/Spotify-for-Developers/Changes-to-Web-API/td-p/6540414
 
 This project is for educational purposes only. It is not affiliated with Spotify or any of its subsidiaries. @OtbeyNat's Spotify LITE DOES NOT comply with Spotify's Developer Policy (https://developer.spotify.com/policy). In order to have full functionalities of the app, you must have a Spotify account AND have a registered account for @OtbeyNat's Spotify LITE (registering an account can only be done manually and is limited to 25 accounts due to the basic plan's quota - in order to extend the quota to as many users as possible, an extension request has to be made to Spotify). For any concerns or inquiries about this application, please email tctan317@gmail.com
 
